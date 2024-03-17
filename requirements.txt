@@ -6,4 +6,3 @@ io
 PIL
 base64
 requests
-os
