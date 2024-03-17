@@ -1,8 +1,7 @@
 from openai import OpenAI
 import streamlit as st
 
-
-# Title
+# Title for page
 st.title('Chat 💬')
 
 # Sidebar for options
