@@ -103,8 +103,8 @@ with textGeneration:
 
                 # Making a call to Anthropic API
                 client = anthropic.Anthropic(
-                # defaults to os.environ.get("ANTHROPIC_API_KEY")
-                api_key=st.secrets["anthropic-key"],
+
+                api_key=anthropic_api_key,
                 )
                 message = client.messages.create(
                     model="claude-3-haiku-20240307",
