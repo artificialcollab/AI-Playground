@@ -9,10 +9,12 @@ import requests
 import os
 
 # Set API service urls and keys from secrets.toml file in CWD
-openai.api_key = st.secrets["openai-key"]
-anthropic_api_key = st.secrets["anthropic-key"]
-stability_host = st.secrets["STABILITY_API_HOST"]
-stability_api_key = st.secrets["STABILITY_API_KEY"]
+# If testing locally, use st.secrets["key_name"] to access the keys
+# If deploying to Azure App Service, use os.environ["key_name"] to access the keys
+openai.api_key = os.environ["openai_key"]
+anthropic_api_key = os.environ["anthropic_key"]
+stability_host = os.environ["STABILITY_API_HOST"]
+stability_api_key = os.environ["STABILITY_API_KEY"]
 
 # Set default system message
 defaultSysMessage = "You are a helpful assistant."
