@@ -15,7 +15,7 @@ import os
 #stability_host = st.secrets["STABILITY_API_HOST"]
 #stability_api_key = st.secrets["STABILITY_API_KEY"]
 
-# If deploying to Azure App Service, use os.environ.get("key_name") to access the keys
+# If deploying to Azure App Service, use os.environ.get("key_name") to access the keys, like below
 openai.api_key = os.environ.get("openai_key")
 anthropic_api_key = os.environ.get("anthropic_key")
 stability_host = os.environ.get("STABILITY_API_HOST")
@@ -31,13 +31,13 @@ st.title('Generation Playground')
 st.write('This is a simple web app to play with different AI models.')
 
 # Sidebar for options
-st.sidebar.title('Options')
-st.sidebar.write('Use the sidebar to select a page')
-with st.sidebar:
-    if st.button('Chat'):
-        st.switch_page("pages/Chat.py")
-    if st.button('Generation Playground'):
-        st.switch_page("Generation Playground.py")
+#st.sidebar.title('Options')
+#st.sidebar.write('Use the sidebar to select a page')
+#with st.sidebar:
+#    if st.button('Chat'):
+#        st.switch_page("pages/Chat.py")
+#    if st.button('Generation Playground'):
+#        st.switch_page("Generation Playground.py")
 
 # Tabs for text and image generation
 textGeneration, imageGeneration, chat = st.tabs(['📝 Text Generation', '🖼️ Image Generation', '💬 Chat'])
@@ -45,20 +45,20 @@ textGeneration, imageGeneration, chat = st.tabs(['📝 Text Generation', '🖼�
 with textGeneration:
 
     # Model selection
-    st.subheader('**Model selection**')
-    textModel = st.selectbox('Text Model:', ['GPT-3.5 Turbo', 'GPT-4 Turbo', 'Claude 3 Haiku'], label_visibility = 'collapsed')
+    textModel = st.radio('Model:', ['GPT-3.5 Turbo', 'GPT-4 Turbo', 'Claude 3 Haiku'], horizontal=True)
+    #textModel = st.selectbox('Text Model:', ['GPT-3.5 Turbo', 'GPT-4 Turbo', 'Claude 3 Haiku'], label_visibility = 'collapsed')
 
     # Explain the selected model
     if textModel == 'GPT-3.5 Turbo':
-        with st.expander("**Model explanation**", expanded=True):
+        with st.expander("**Model explanation**"):
             st.caption('**GPT-3.5 Turbo** excels at generating human-like text across a wide range of topics, making it valuable for writing assistance, content generation, and chatbots. **GPT-3.5 Turbo** may still produce errors, lack context awareness, and exhibit biases due to its training data. \n \n - **GPT-3.5 Turbo** provides a solid balance of intelligence, speed, and cost-effectiveness, making it a popular choice for a wide range of applications.')
 
     elif textModel == 'GPT-4 Turbo':
-        with st.expander("**Model Explanation**", expanded=True):
+        with st.expander("**Model Explanation**"):
             st.caption('**GPT-4 Turbo** is a powerful text generation model by OpenAI. It is the latest version of the GPT series and is known for its human-like text generation capabilities. **GPT-4 Turbo** is a large-scale model with 1.6 trillion parameters, making it one of the most powerful text generation models available today. \n \n - **GPT-4 Turbo** is wicked smart but also costly. Only use **GPT-4 Turbo** when you need a more robust intelligence and are willing to pay the price.')
 
     elif textModel == 'Claude 3 Haiku':
-        with st.expander("**Model explanation**", expanded=True):
+        with st.expander("**Model explanation**"):
             st.caption("**Claude 3 Haiku** is a text generation model by Anthropic. It is designed to generate haikus, a form of Japanese poetry. The model is trained on a large dataset of haikus and is capable of generating high-quality haikus with a human-like touch. \n \n - **Claude 3 Haiku** is a specialized model that is perfect for generating haikus. It is not as versatile as GPT-3.5 Turbo or GPT-4 Turbo, but it excels at generating haikus with a human-like touch.")
 
     # User input
