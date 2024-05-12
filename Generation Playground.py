@@ -54,12 +54,12 @@ with textGeneration:
             st.caption('**GPT-3.5 Turbo** excels at generating human-like text across a wide range of topics, making it valuable for writing assistance, content generation, and chatbots. **GPT-3.5 Turbo** may still produce errors, lack context awareness, and exhibit biases due to its training data. \n \n - **GPT-3.5 Turbo** provides a solid balance of intelligence, speed, and cost-effectiveness, making it a popular choice for a wide range of applications.')
 
     elif textModel == 'GPT-4 Turbo':
-        with st.expander("**Model Explanation**"):
+        with st.expander("**Model explanation**"):
             st.caption('**GPT-4 Turbo** is a powerful text generation model by OpenAI. It is the latest version of the GPT series and is known for its human-like text generation capabilities. **GPT-4 Turbo** is a large-scale model with 1.6 trillion parameters, making it one of the most powerful text generation models available today. \n \n - **GPT-4 Turbo** is wicked smart but also costly. Only use **GPT-4 Turbo** when you need a more robust intelligence and are willing to pay the price.')
 
     elif textModel == 'Claude 3 Haiku':
         with st.expander("**Model explanation**"):
-            st.caption("**Claude 3 Haiku** is a text generation model by Anthropic. It is designed to generate haikus, a form of Japanese poetry. The model is trained on a large dataset of haikus and is capable of generating high-quality haikus with a human-like touch. \n \n - **Claude 3 Haiku** is a specialized model that is perfect for generating haikus. It is not as versatile as GPT-3.5 Turbo or GPT-4 Turbo, but it excels at generating haikus with a human-like touch.")
+            st.caption("**Claude 3 Haiku** is a text generation model by Anthropic. With state-of-the-art vision capabilities and strong performance on industry benchmarks, Haiku is a versatile solution for a wide range of enterprise applications. \n \n - **Claude 3 Haiku** is the fastest and most affordable model in its intelligence class from Anthropic.")
 
     # User input
     user_prompt = st.text_area("Enter your prompt:")
@@ -103,7 +103,6 @@ with textGeneration:
 
                 # Making a call to Anthropic API
                 client = anthropic.Anthropic(
-
                 api_key=anthropic_api_key,
                 )
                 message = client.messages.create(
