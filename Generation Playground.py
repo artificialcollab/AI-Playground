@@ -25,10 +25,13 @@ stability_api_key = os.environ.get("STABILITY_API_KEY")
 defaultSysMessage = "You are a helpful assistant."
 
 # Streamlit app starts
-st.title('Generation Playground')
+st.title('Artificial Collab Playground')
 
 # Heading for the app
-st.write('This is a simple web app to play with different AI models.')
+st.write('Welcome to the Artificial Collab Playground! Use this app to generate text, images, and chat with AI models. Select the model and enter a prompt to get started.')
+
+# Icon for the app
+st.image('https://thumb7.shutterstock.com/image-photo/redirected-150nw-678583375.jpg', width=100)
 
 # Sidebar for options
 #st.sidebar.title('Options')
@@ -45,7 +48,7 @@ textGeneration, imageGeneration, chat = st.tabs(['📝 Text Generation', '🖼�
 with textGeneration:
 
     # Model selection
-    textModel = st.radio('Model:', ['GPT-3.5 Turbo', 'GPT-4 Turbo', 'Claude 3 Haiku'], horizontal=True)
+    textModel = st.radio('Model:', ['GPT-3.5 Turbo', 'GPT-4 Turbo', 'GPT-4o', 'Claude 3 Haiku'], horizontal=True)
     #textModel = st.selectbox('Text Model:', ['GPT-3.5 Turbo', 'GPT-4 Turbo', 'Claude 3 Haiku'], label_visibility = 'collapsed')
 
     # Explain the selected model
@@ -89,6 +92,22 @@ with textGeneration:
                 client = openai.OpenAI(api_key=openai.api_key)
                 completion = client.chat.completions.create(
                 model="gpt-4-0125-preview",
+                messages=[
+                    {"role": "system", "content": defaultSysMessage},
+                    {"role": "user", "content": user_prompt}
+                ]
+                )
+                response = completion.choices[0].message.content
+                # Displaying the response
+                st.markdown(response)
+
+            elif textModel == 'GPT-4o':
+                st.write('GPT-4o is a text generation model by OpenAI.')
+                
+                # Making a call to OpenAI API
+                client = openai.OpenAI(api_key=openai.api_key)
+                completion = client.chat.completions.create(
+                model="gpt-4o",
                 messages=[
                     {"role": "system", "content": defaultSysMessage},
                     {"role": "user", "content": user_prompt}
