@@ -30,8 +30,8 @@ st.title('Artificial Collab Playground')
 # Heading for the app
 st.write('Welcome to the Artificial Collab Playground! Use this app to generate text, images, and chat with AI models. Select the model and enter a prompt to get started.')
 
-# Icon for the app
-st.image('https://thumb7.shutterstock.com/image-photo/redirected-150nw-678583375.jpg', width=100)
+# Tab favicon for the app
+st.set_page_config(page_title='Artificial Collab Playground', page_icon='🤖')
 
 # Sidebar for options
 #st.sidebar.title('Options')
