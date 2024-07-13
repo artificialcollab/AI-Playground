@@ -24,14 +24,14 @@ stability_api_key = os.environ.get("STABILITY_API_KEY")
 # Set default system message
 defaultSysMessage = "You are a helpful assistant."
 
+# Tab favicon for the app
+st.set_page_config(page_title='Artificial Collab Playground', page_icon='🤖')
+
 # Streamlit app starts
 st.title('Artificial Collab Playground')
 
 # Heading for the app
 st.write('Welcome to the Artificial Collab Playground! Use this app to generate text, images, and chat with AI models. Select the model and enter a prompt to get started.')
-
-# Tab favicon for the app
-st.set_page_config(page_title='Artificial Collab Playground', page_icon='🤖')
 
 # Sidebar for options
 #st.sidebar.title('Options')
