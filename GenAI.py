@@ -1,6 +1,5 @@
 import streamlit as st
 import openai
-import anthropic
 import numpy as np
 import io
 from PIL import Image
@@ -25,53 +24,48 @@ stability_api_key = os.environ.get("STABILITY_API_KEY")
 defaultSysMessage = "You are a helpful assistant."
 
 # Tab favicon for the app
-st.set_page_config(page_title='Artificial Collab Playground', page_icon='🤖')
+st.set_page_config(page_icon='https://aicollabsi-0983057d1c3d9034-endpoint.azureedge.net/blobaicollabsi697816b8bf/wp-content/uploads/2024/07/cropped-favicon-2.png', page_title='Collab App: GenAI')
 
-# Streamlit app starts
-st.title('Artificial Collab Playground')
-
-# Heading for the app
-st.write('Welcome to the Artificial Collab Playground! Use this app to generate text, images, and chat with AI models. Select the model and enter a prompt to get started.')
-
-# Sidebar for options
-#st.sidebar.title('Options')
-#st.sidebar.write('Use the sidebar to select a page')
-#with st.sidebar:
-#    if st.button('Chat'):
-#        st.switch_page("pages/Chat.py")
-#    if st.button('Generation Playground'):
-#        st.switch_page("Generation Playground.py")
+# Logo for the side of the app
+main_logo ='https://aicollabsi-0983057d1c3d9034-endpoint.azureedge.net/blobaicollabsi697816b8bf/wp-content/uploads/2024/07/cropped-favicon-2.png'
+sidebar_logo = 'https://aicollabsi-0983057d1c3d9034-endpoint.azureedge.net/blobaicollabsi697816b8bf/wp-content/uploads/2024/07/cropped-favicon-2.png'
+st.logo(main_logo, icon_image=sidebar_logo)
 
 # Tabs for text and image generation
-textGeneration, imageGeneration, chat = st.tabs(['📝 Text Generation', '🖼️ Image Generation', '💬 Chat'])
+textGeneration, imageGeneration = st.tabs(['📝 TxtGen', '🖼️ ImgGen'])
 
 with textGeneration:
 
     # Model selection
-    textModel = st.radio('Model:', ['GPT-3.5 Turbo', 'GPT-4 Turbo', 'GPT-4o', 'Claude 3 Haiku'], horizontal=True)
-    #textModel = st.selectbox('Text Model:', ['GPT-3.5 Turbo', 'GPT-4 Turbo', 'Claude 3 Haiku'], label_visibility = 'collapsed')
+    textModel = st.radio('Model:', ['GPT-3.5 Turbo', 'GPT-4 Turbo', 'GPT-4o', 'GPT-4o-mini'], horizontal=True)
 
     # Explain the selected model
     if textModel == 'GPT-3.5 Turbo':
-        with st.expander("**Model explanation**"):
+        with st.expander("**Model details**"):
             st.caption('**GPT-3.5 Turbo** excels at generating human-like text across a wide range of topics, making it valuable for writing assistance, content generation, and chatbots. **GPT-3.5 Turbo** may still produce errors, lack context awareness, and exhibit biases due to its training data. \n \n - **GPT-3.5 Turbo** provides a solid balance of intelligence, speed, and cost-effectiveness, making it a popular choice for a wide range of applications.')
 
     elif textModel == 'GPT-4 Turbo':
-        with st.expander("**Model explanation**"):
+        with st.expander("**Model details**"):
             st.caption('**GPT-4 Turbo** is a powerful text generation model by OpenAI. It is the latest version of the GPT series and is known for its human-like text generation capabilities. **GPT-4 Turbo** is a large-scale model with 1.6 trillion parameters, making it one of the most powerful text generation models available today. \n \n - **GPT-4 Turbo** is wicked smart but also costly. Only use **GPT-4 Turbo** when you need a more robust intelligence and are willing to pay the price.')
 
-    elif textModel == 'Claude 3 Haiku':
-        with st.expander("**Model explanation**"):
-            st.caption("**Claude 3 Haiku** is a text generation model by Anthropic. With state-of-the-art vision capabilities and strong performance on industry benchmarks, Haiku is a versatile solution for a wide range of enterprise applications. \n \n - **Claude 3 Haiku** is the fastest and most affordable model in its intelligence class from Anthropic.")
+    elif textModel == 'GPT-4o':
+        with st.expander("**Model details**"):
+            st.caption("OpenAI's most advanced, multimodal flagship model. It's cheaper and faster than GPT-4 Turbo. \n \n **Context Window:** 128,000 tokens | **Training Data:** Up to October 2023 \n \n \$5.00 / 1M input tokens | \$15.00 / 1M output tokens")
+            
+
+    elif textModel == 'GPT-4o-mini':
+        with st.expander("**Model details**"):          
+            st.caption("OpenAI's most affordable and intelligent small model for fast, lightweight tasks. GPT-4o mini is cheaper and more capable than GPT-3.5 Turbo. \n \n **Context Window:** 128,000 tokens | **Training Data:** Up to October 2023 \n \n \$0.150 / 1M input tokens | \$0.600 / 1M output tokens"
+            )
 
     # User input
-    user_prompt = st.text_area("Enter your prompt:")
+    user_prompt = st.text_area("Prompt:")
 
     if st.button('Submit'):
         if user_prompt:
             # Switch case for different services
             if textModel == 'GPT-3.5 Turbo':
-                st.write('GPT-3.5 Turbo is a text generation model by OpenAI.')
+                #st.write('GPT-3.5 Turbo is a text generation model by OpenAI.')
 
                 # Making a call to OpenAI API
                 client = openai.OpenAI(api_key=openai.api_key)
@@ -82,11 +76,13 @@ with textGeneration:
                     {"role": "user", "content": user_prompt}
                 ]
                 )
+                response = completion.choices[0].message.content
+
                 # Displaying the response
-                st.text_area("GPT-3.5 Response:", value=completion.choices[0].message.content, height=250)
+                st.markdown(response)
 
             elif textModel == 'GPT-4 Turbo':
-                st.write('GPT-4 Turbo is a text generation model by OpenAI.')
+                #st.write('GPT-4 Turbo is a text generation model by OpenAI.')
                 
                 # Making a call to OpenAI API
                 client = openai.OpenAI(api_key=openai.api_key)
@@ -98,11 +94,12 @@ with textGeneration:
                 ]
                 )
                 response = completion.choices[0].message.content
+
                 # Displaying the response
                 st.markdown(response)
 
             elif textModel == 'GPT-4o':
-                st.write('GPT-4o is a text generation model by OpenAI.')
+                #st.write('GPT-4o is a text generation model by OpenAI.')
                 
                 # Making a call to OpenAI API
                 client = openai.OpenAI(api_key=openai.api_key)
@@ -114,45 +111,38 @@ with textGeneration:
                 ]
                 )
                 response = completion.choices[0].message.content
+
                 # Displaying the response
                 st.markdown(response)
 
-            elif textModel == 'Claude 3 Haiku':
-                st.write('Claude 3 Haiku is a text generation model by Anthropic.')
+            elif textModel == 'GPT-4o-mini':
+                #st.write('GPT-4o-mini is a text generation model by OpenAI.')
+                
+                # Making a call to OpenAI API
+                client = openai.OpenAI(api_key=openai.api_key)
+                completion = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": defaultSysMessage},
+                    {"role": "user", "content": user_prompt}
+                ]
+                )
+                response = completion.choices[0].message.content
 
-                # Making a call to Anthropic API
-                client = anthropic.Anthropic(
-                api_key=anthropic_api_key,
-                )
-                message = client.messages.create(
-                    model="claude-3-haiku-20240307",
-                    max_tokens=1000,
-                    temperature=0,
-                    system=defaultSysMessage,
-                    messages=[{ "role": "user", "content": [
-                            {
-                                "type": "text",
-                                "text": user_prompt
-                            }
-                        ]
-                    }]
-                )
-                st.text_area("Claude 3 Haiku Response:", value=message.content[0].text, height=250)
-            
-        else:
-            st.warning('Please enter a prompt.')
+                # Displaying the response
+                st.markdown(response)
 
 # Image generation section
 with imageGeneration:
-    imageModel = st.selectbox('Model:', ['OpenAI DALL-E 3', 'Stability AI'], label_visibility = 'collapsed')
+    imageModel = st.selectbox('Model:', ['DALL-E 3', 'Stable Diffusion 3'], label_visibility = 'collapsed')
 
     # Get the prompt from the user
     image_prompt = st.text_area("Enter a prompt to generate an image:", "")
 
     if st.button("Generate Image"):
         if image_prompt:
-            if imageModel == 'Stability AI':
-                st.write('Stability AI is a powerful image generation model by OpenAI.')
+            if imageModel == 'Stable Diffusion 3':
+                st.write('Stable Diffusion 3 is a powerful image generation model by stability.ai')
 
                 # Making a call to Stability AI API
                 engine_id = "stable-diffusion-v1-6"
@@ -200,14 +190,13 @@ with imageGeneration:
                         )
 
                 
-            elif imageModel == 'OpenAI DALL-E 3':
-                st.write('OpenAI DALL-E 3 is a powerful image generation model by OpenAI.')
+            elif imageModel == 'DALL-E 3':
+                st.write('DALL-E 3 is a powerful image generation model by OpenAI.')
 
                 # Making a call to OpenAI API
                 imageClient = openai.OpenAI(api_key=openai.api_key)
                 
                 # Call the DALL-E 3 API to generate the image
-                
                 response = imageClient.images.generate(
                     model="dall-e-3",
                     prompt=image_prompt,
@@ -232,38 +221,6 @@ with imageGeneration:
 
         else:
             st.warning('Please enter a prompt.')
-
-with chat:
-    #chatModel = st.selectbox('Chat Model:', ['GPT-3.5 Turbo', 'GPT-4 Turbo $$', 'Claude 3 Haiku'])
-
-    chatClient = openai.OpenAI(api_key=openai.api_key)
-
-    if "openai_model" not in st.session_state:
-        st.session_state["openai_model"] = "gpt-3.5-turbo"
-
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-
-    if prompt := st.chat_input("What is up?"):
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
-
-        with st.chat_message("assistant"):
-            stream = chatClient.chat.completions.create(
-                model=st.session_state["openai_model"],
-                messages=[
-                    {"role": m["role"], "content": m["content"]}
-                    for m in st.session_state.messages
-                ],
-                stream=True,
-            )
-            response = st.write_stream(stream)
-        st.session_state.messages.append({"role": "assistant", "content": response})
 
 # Streamlit app ends
     

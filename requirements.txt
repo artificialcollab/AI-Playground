@@ -1,5 +1,4 @@
 streamlit
 openai
-anthropic
 numpy
 requests

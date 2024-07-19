@@ -1,22 +1,21 @@
 from openai import OpenAI
 import streamlit as st
 
+# Tab favicon for the app
+st.set_page_config(page_icon='https://aicollabsi-0983057d1c3d9034-endpoint.azureedge.net/blobaicollabsi697816b8bf/wp-content/uploads/2024/07/cropped-favicon-2.png')
+
+# Logo for the side of the app
+main_logo ='https://aicollabsi-0983057d1c3d9034-endpoint.azureedge.net/blobaicollabsi697816b8bf/wp-content/uploads/2024/07/cropped-favicon-2.png'
+sidebar_logo = 'https://aicollabsi-0983057d1c3d9034-endpoint.azureedge.net/blobaicollabsi697816b8bf/wp-content/uploads/2024/07/cropped-favicon-2.png'
+st.logo(main_logo, icon_image=sidebar_logo)
+
 # Title for page
 st.title('Chat 💬')
 
-# Sidebar for options
-st.sidebar.title('Options')
-st.sidebar.write('Use the sidebar to select a page')
-with st.sidebar:
-    if st.button('Chat'):
-        st.switch_page("pages/Chat.py")
-    if st.button('Generation Playground'):
-        st.switch_page("Generation Playground.py")
-
-client = OpenAI(api_key=st.secrets["openai-key"])
+client = OpenAI(api_key=st.secrets["openai_key"])
 
 if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo"
+    st.session_state["openai_model"] = "gpt-4o"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
