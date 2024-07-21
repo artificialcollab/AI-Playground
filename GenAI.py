@@ -134,7 +134,7 @@ with textGeneration:
 
 # Image generation section
 with imageGeneration:
-    imageModel = st.selectbox('Model:', ['DALL-E 3', 'Stable Diffusion 3'], label_visibility = 'collapsed')
+    imageModel = st.radio('Model:', ['DALL-E 3', 'Stable Diffusion 3'], horizontal=True)
 
     # Get the prompt from the user
     image_prompt = st.text_area("Enter a prompt to generate an image:", "")
