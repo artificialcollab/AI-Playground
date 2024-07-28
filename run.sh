@@ -1,1 +1,1 @@
-python -m streamlit run 'Generation Playground.py' --server.port 8000 --server.address 0.0.0.0
+python -m streamlit run 'GenAI.py' --server.port 8000 --server.address 0.0.0.0

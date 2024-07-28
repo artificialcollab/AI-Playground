@@ -10,7 +10,8 @@ sidebar_logo = 'https://aicollabsi-0983057d1c3d9034-endpoint.azureedge.net/bloba
 st.logo(main_logo, icon_image=sidebar_logo)
 
 # Title for page
-st.title('Chat 💬')
+st.header('Collab App: Chat 💬')
+st.caption('This is a simple chat interface that uses the AI to generate responses. \n **Current Model:** *GPT-4o*')
 
 client = OpenAI(api_key=st.secrets["openai_key"])
 

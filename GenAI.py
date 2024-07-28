@@ -31,33 +31,38 @@ main_logo ='https://aicollabsi-0983057d1c3d9034-endpoint.azureedge.net/blobaicol
 sidebar_logo = 'https://aicollabsi-0983057d1c3d9034-endpoint.azureedge.net/blobaicollabsi697816b8bf/wp-content/uploads/2024/07/cropped-favicon-2.png'
 st.logo(main_logo, icon_image=sidebar_logo)
 
+# Title for the app screen
+st.header('Collab App: Text and Image Generation')
+
 # Tabs for text and image generation
 textGeneration, imageGeneration = st.tabs(['📝 TxtGen', '🖼️ ImgGen'])
 
 with textGeneration:
 
-    # Model selection
-    textModel = st.radio('Model:', ['GPT-3.5 Turbo', 'GPT-4 Turbo', 'GPT-4o', 'GPT-4o-mini'], horizontal=True)
 
-    # Explain the selected model
-    if textModel == 'GPT-3.5 Turbo':
-        with st.expander("**Model details**"):
+    # Model selection
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        textModel = st.radio('**Model Selection**',['GPT-3.5 Turbo', 'GPT-4 Turbo', 'GPT-4o', 'GPT-4o-mini'], key="text_model")
+    with col2:
+        if textModel == 'GPT-3.5 Turbo':
+            st.write('Model Details')
             st.caption('**GPT-3.5 Turbo** excels at generating human-like text across a wide range of topics, making it valuable for writing assistance, content generation, and chatbots. **GPT-3.5 Turbo** may still produce errors, lack context awareness, and exhibit biases due to its training data. \n \n - **GPT-3.5 Turbo** provides a solid balance of intelligence, speed, and cost-effectiveness, making it a popular choice for a wide range of applications.')
 
-    elif textModel == 'GPT-4 Turbo':
-        with st.expander("**Model details**"):
+        elif textModel == 'GPT-4 Turbo':
+            st.write('Model Details')
             st.caption('**GPT-4 Turbo** is a powerful text generation model by OpenAI. It is the latest version of the GPT series and is known for its human-like text generation capabilities. **GPT-4 Turbo** is a large-scale model with 1.6 trillion parameters, making it one of the most powerful text generation models available today. \n \n - **GPT-4 Turbo** is wicked smart but also costly. Only use **GPT-4 Turbo** when you need a more robust intelligence and are willing to pay the price.')
 
-    elif textModel == 'GPT-4o':
-        with st.expander("**Model details**"):
+        elif textModel == 'GPT-4o':
+            st.write('Model Details')
             st.caption("OpenAI's most advanced, multimodal flagship model. It's cheaper and faster than GPT-4 Turbo. \n \n **Context Window:** 128,000 tokens | **Training Data:** Up to October 2023 \n \n \$5.00 / 1M input tokens | \$15.00 / 1M output tokens")
-            
+                
 
-    elif textModel == 'GPT-4o-mini':
-        with st.expander("**Model details**"):          
-            st.caption("OpenAI's most affordable and intelligent small model for fast, lightweight tasks. GPT-4o mini is cheaper and more capable than GPT-3.5 Turbo. \n \n **Context Window:** 128,000 tokens | **Training Data:** Up to October 2023 \n \n \$0.150 / 1M input tokens | \$0.600 / 1M output tokens"
+        elif textModel == 'GPT-4o-mini':
+            st.write('Model Details')        
+            st.caption("OpenAI's most affordable and intelligent small model for fast, lightweight tasks. **GPT-4o mini** is cheaper and more capable than GPT-3.5 Turbo. \n \n **Context Window:** 128,000 tokens | **Training Data:** Up to October 2023 \n \n \$0.150 / 1M input tokens | \$0.600 / 1M output tokens"
             )
-
+    
     # User input
     user_prompt = st.text_area("Prompt:")
 
@@ -134,8 +139,21 @@ with textGeneration:
 
 # Image generation section
 with imageGeneration:
-    imageModel = st.radio('Model:', ['DALL-E 3', 'Stable Diffusion 3'], horizontal=True)
 
+    # Model selection
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        imageModel = st.radio('**Model Selection**', ['DALL-E 3', 'Stable Diffusion 3'], horizontal=False)
+
+    with col2:
+        if imageModel == 'DALL-E 3':
+            st.write('Model Details')
+            st.caption('**DALL-E 3** is a powerful image generation model designed to create high-quality, realistic images from textual descriptions. It excels at understanding context and generating detailed visuals that align closely with user prompts. DALL-E 3 incorporates advanced features for composition, stylistic interpretation, and imaginative renderings, making it ideal for artists, marketers, and anyone needing custom visuals.')
+
+        elif imageModel == 'Stable Diffusion 3':
+            st.write('Model Details')
+            st.caption('**Stable Diffusion 3** is a state-of-the-art image generation model developed by stability.ai. It uses diffusion models to generate high-quality images from textual prompts. Stable Diffusion 3 is known for its stability, scalability, and high-fidelity image generation capabilities. It is ideal for artists, designers, and anyone looking to create realistic images from text.')
+    
     # Get the prompt from the user
     image_prompt = st.text_area("Enter a prompt to generate an image:", "")
 
